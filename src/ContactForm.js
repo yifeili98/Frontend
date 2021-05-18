@@ -1,12 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import './assets/css/App.css';
-import './vendors/css/bootstrap.min.css'
-import './vendors/css/bootstrap-grid.min.css'
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import {Modal, Button, Form, Container, Row, Col} from 'react-bootstrap';
 
-class NameForm extends React.Component {
+
+class ContactForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,49 +68,50 @@ class NameForm extends React.Component {
     return (
       <Modal.Dialog>
         <Modal.Header>
-          <Modal.Title className="contact-title">Contact Form</Modal.Title>
+          <Modal.Title className="contact_title">Contact Form</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-        <form>
-            <div className="row">
-              <div className="col">
-                <label>Name</label>
-                <input
-                name="name"
-                type="text"
-                value={this.state.name}
-                placeholder="Name"
-                className="form-control"
-                onChange={this.handleInputChange} />
-              </div>
-              <div className="col">
-                <label>Email Address</label>
-                <input
-                name="email"
-                type="email"
-                value={this.state.email}
-                placeholder="Email Address"
-                className="form-control"
-                onChange={this.handleInputChange} />
-              </div>
-            </div>
-            <div className="form-group" style={{textAlign: 'center'}}>
-              <label>Message</label>
+        <Form>
+            <Container>
+              <Row>
+                <Col>
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                  name="name"
+                  type="text"
+                  value={this.state.name}
+                  placeholder="Name"
+                  onChange={this.handleInputChange}>
+                  </Form.Control>
+                </Col>
+                <Col>
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                  name="email"
+                  type="email"
+                  value={this.state.email}
+                  placeholder="Email Address"
+                  onChange={this.handleInputChange}>
+                  </Form.Control>
+                </Col>
+              </Row>
+            </Container>
+            <Form.Group className="form_group">
+              <Form.Label>Message</Form.Label>
               <br />
-              <textarea
-              name="form_body"
-              type="form_body"
+              <Form.Control 
+              as="textarea" 
               value={this.state.form_body}
               onChange={this.handleInputChange}
-              rows="5"
-              style={{width: '70%'}}></textarea>
-            </div>
-          </form>
+              rows={5}
+              className="contact_textarea">
+              </Form.Control>
+            </Form.Group>
+          </Form>
         </Modal.Body>
 
         <Modal.Footer>
-          {/* <Button variant="secondary" onClick={this.handleClick}>Close</Button> */}
           <Button variant="primary" onClick={this.handleSubmit}>Submit</Button>
         </Modal.Footer>
       </Modal.Dialog>
@@ -123,4 +122,4 @@ class NameForm extends React.Component {
   }
 }
 
-export default NameForm;
+export default ContactForm;
