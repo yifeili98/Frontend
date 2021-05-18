@@ -4,6 +4,9 @@ import './assets/css/About.css';
 import './assets/css/home.css';
 import Carousel from 'react-bootstrap/Carousel';
 import NameForm from './ContactForm';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class About extends React.Component {
   constructor(props) {
@@ -65,8 +68,8 @@ class About extends React.Component {
 
           <div className="about-value">
             <h3 className="bt-h3 bt-bold mb-2 about-header">Our Values</h3>
-            <div className="row">
-              <div className="value-col col-md-4 col-12">
+            <Row>
+              <Col className="value-col">
                 <div className="value">
                   <div className="value-content">
                     <img src={process.env.PUBLIC_URL + '/logo-placeholder-png.png'}></img>
@@ -76,8 +79,8 @@ class About extends React.Component {
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className="value-col col-md-4 col-12">
+              </Col>
+              <Col className="value-col">
                 <div className="value">
                   <div className="value-content">
                     <img src={process.env.PUBLIC_URL + '/logo-placeholder-png.png'}></img>
@@ -87,8 +90,8 @@ class About extends React.Component {
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className="value-col col-md-4 col-12">
+              </Col>
+              <Col className="value-col">
                 <div className="value">
                   <div className="value-content">
                     <img src={process.env.PUBLIC_URL + '/logo-placeholder-png.png'}></img>
@@ -98,8 +101,8 @@ class About extends React.Component {
                     </p>
                   </div>
                 </div>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </div>
           <div>
             <NameForm/>

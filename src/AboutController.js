@@ -1,11 +1,9 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NameForm from './ContactForm';
+import {Nav, Navbar} from 'react-bootstrap';
+import ContactForm from './ContactForm';
 import About from './About';
 import './assets/css/App.css';
-import './vendors/css/bootstrap.min.css'
-import './vendors/css/bootstrap-grid.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class AboutController extends React.Component {
   constructor(props) {
@@ -40,7 +38,7 @@ class AboutController extends React.Component {
   NavTop() {
     return(
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">Other Pages</Navbar.Brand>
+        <Navbar.Brand>Other Pages</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -58,7 +56,7 @@ class AboutController extends React.Component {
     } else {
       return (
         <div>
-          <NameForm toggle={this.togglePop} />
+          <ContactForm toggle={this.togglePop} />
         </div>
       )
     }
