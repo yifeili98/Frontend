@@ -63,3 +63,7 @@
 .bg-red{
   background-color: rgb(143, 5, 5);
 }
+
+img.navbar-img{
+  border-radius: 50%;
+}

@@ -13,7 +13,7 @@ export default function App() {
         <div className="App">
             <Navbar bg="red" variant="dark" className="navbar">
                 <Navbar.Brand href="/" className="navbar-brand">
-                    <img src={da_logo} alt=""/>
+                    <img className="navbar-img" src={da_logo} alt=""/>
                     {' '}FHDATime
                 </Navbar.Brand>
                 <Nav className="mr-auto">
