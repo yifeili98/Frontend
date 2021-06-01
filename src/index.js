@@ -1,9 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './assets/css/index.css';
-import AboutController from './AboutController';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./assets/css/index.css";
+import App from "./App";
 
-ReactDOM.render(
-  <AboutController />,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById("root"));
