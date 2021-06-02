@@ -1,8 +1,13 @@
 import React from "react";
 import "../assets/css/courseItem.css";
+import { Col } from "react-bootstrap";
 
 const CoursesWrapper = (props) => {
-  return <div className="courses-items">{props.children}</div>;
+  return (
+    <Col className="courses-items" sm>
+      {props.children}
+    </Col>
+  );
 };
 
 export default CoursesWrapper;
