@@ -1,6 +1,6 @@
 import React from 'react'
-import './assets/css/home.css';
-import districtLogo from './assets/pic/logo_district.png';
+import '../../assets/css/home.css';
+import districtLogo from '../../assets/pic/logo_district.png';
 
 export default function Home() {
     return (
