@@ -4,7 +4,7 @@ import { Col } from "react-bootstrap";
 
 const CoursesWrapper = (props) => {
   return (
-    <Col className="courses-items" sm>
+    <Col className="courses-items">
       {props.children}
     </Col>
   );

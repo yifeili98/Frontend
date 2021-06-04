@@ -1,18 +1,37 @@
 import React, { useEffect, useState, useCallback } from "react";
-import Header from "./components/Header";
-import CoursesWrapper from "./components/CoursesWrapper";
-import CourseItem from "./components/CourseItem";
+import Header from "../../components/Header";
+import CoursesWrapper from "../../components/CoursesWrapper";
+import CourseItem from "../../components/CourseItem";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
-import Filter from "./components/Filter";
-import CatalogDescription from "./components/CatalogDescription";
+import Filter from "./Filter";
+import CatalogDescription from "../../components/CatalogDescription";
 
 function Catalog() {
   const [courses, setCourses] = useState([]);
   const [filtedCourses, setFiltedCourses] = useState([]);
 
+  String.prototype.splice = function(idx, rem, str) {
+    return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+  };
+
+
   const fuzzyQuery = useCallback((courses, keyWord) => {
-    console.log(typeof keyWord);
+    var plus = []
+    for (let charIndex = 0; charIndex < keyWord.length; charIndex++) {
+      if (keyWord[charIndex] === '+') {
+        plus.push(charIndex)
+      }
+    }
+    var reverseIndex = keyWord.length;
+    //Finds case for ++, change it to \+\+
+    while (reverseIndex > 0) {
+      if (keyWord[reverseIndex] != '+') {
+        reverseIndex--;
+      } else {
+        keyWord = keyWord.splice(reverseIndex, 0, '\\');
+      }
+    }
     let reg = new RegExp(keyWord, "i");
     let arr = [];
     for (let i = 0; i < courses.length; i++) {
@@ -61,19 +80,18 @@ function Catalog() {
       <Container fluid>
         <Row>
           <CoursesWrapper>
+            <Filter searchChangeHandler={searchChangeHandler} />
+          </CoursesWrapper>
+          <CoursesWrapper>
             {filtedCourses.map((course) => {
               return (
                 <CourseItem
-                  key={Math.random()} //for debug purpose
                   courseName={course.courseName}
                   courseNum={course.courseNum}
                   unit={course.unit}
                 />
               );
             })}
-          </CoursesWrapper>
-          <CoursesWrapper>
-            <Filter searchChangeHandler={searchChangeHandler} />
           </CoursesWrapper>
           <CoursesWrapper>
             <CatalogDescription />

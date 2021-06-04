@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import '../..//assets/css/App.css';
+import '../../assets/css/App.css';
 import {Modal, Button, Form, Container, Row, Col} from 'react-bootstrap';
 
 

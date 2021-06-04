@@ -43,7 +43,7 @@
   text-align: center;
 }
 
-.contact_title {
+.center_title {
   margin-left: auto;
   margin-right: auto;
 }
@@ -54,16 +54,15 @@
   margin-right: auto;
 }
 
-
-.navbar .navbar-brand img{
+.navbar .navbar-brand img {
   width: 60px;
   height: 60px;
 }
 
-.bg-red{
+.bg-red {
   background-color: rgb(143, 5, 5);
 }
 
-img.navbar-img{
+img.navbar-img {
   border-radius: 50%;
 }
