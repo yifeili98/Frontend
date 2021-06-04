@@ -10,26 +10,26 @@ import CatalogDescription from "../../components/CatalogDescription";
 function Catalog() {
   const [courses, setCourses] = useState([]);
   const [filtedCourses, setFiltedCourses] = useState([]);
+  const [specificCourse, setSpecificCourse] = useState({});
 
-  String.prototype.splice = function(idx, rem, str) {
+  String.prototype.splice = function (idx, rem, str) {
     return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
   };
 
-
   const fuzzyQuery = useCallback((courses, keyWord) => {
-    var plus = []
+    var plus = [];
     for (let charIndex = 0; charIndex < keyWord.length; charIndex++) {
-      if (keyWord[charIndex] === '+') {
-        plus.push(charIndex)
+      if (keyWord[charIndex] === "+") {
+        plus.push(charIndex);
       }
     }
     var reverseIndex = keyWord.length;
     //Finds case for ++, change it to \+\+
     while (reverseIndex > 0) {
-      if (keyWord[reverseIndex] != '+') {
+      if (keyWord[reverseIndex] != "+") {
         reverseIndex--;
       } else {
-        keyWord = keyWord.splice(reverseIndex, 0, '\\');
+        keyWord = keyWord.splice(reverseIndex, 0, "\\");
       }
     }
     let reg = new RegExp(keyWord, "i");
@@ -42,13 +42,10 @@ function Catalog() {
     return arr;
   }, []);
 
-  const searchChangeHandler = (event) => {
-    const keyWord = event.target.value
-      .trim()
-      .replace(" ", "")
-      .replace(/[\\]/g, "");
+  const coursesFilter = (input) => {
+    const keyWord = input.trim().replace(" ", "").replace(/[\\]/g, "");
     const filteredClasses = fuzzyQuery(courses, keyWord);
-    console.log(filteredClasses);
+    //console.log(filteredClasses);
     setFiltedCourses(filteredClasses);
   };
 
@@ -62,7 +59,9 @@ function Catalog() {
       .then((res) => {
         for (const key in res.data) {
           const courseObj = res.data[key];
+          localStorage.setItem(key, JSON.stringify(courseObj));
           let course = {
+            key: parseInt(key),
             courseName: courseObj.courseTitle,
             courseNum: courseObj.courseNum,
             unit: +courseObj.numCredit,
@@ -74,27 +73,64 @@ function Catalog() {
       });
   }, []);
 
+  const filterHandler = (responseFromFilter) => {
+    localStorage.clear();
+    const allCourses = [];
+    for (const key in responseFromFilter.data) {
+      const courseObj = responseFromFilter.data[key];
+      localStorage.setItem(key, JSON.stringify(courseObj));
+      let course = {
+        key: parseInt(key),
+        courseName: courseObj.courseTitle,
+        courseNum: courseObj.courseNum,
+        unit: +courseObj.numCredit,
+      };
+      allCourses.push(course);
+    }
+    setCourses(allCourses);
+    setFiltedCourses(allCourses);
+    setSpecificCourse({});
+  }; // can be refactored
+
+  const searchCourseHandler = (event) => {
+    coursesFilter(event.target.value);
+    //console.log(event.target.value);
+  };
+
+  const clickCourseItemHandler = (key) => {
+    let courseString = localStorage.getItem(key);
+    let course = JSON.parse(courseString);
+    setSpecificCourse(course);
+  };
+
   return (
     <React.Fragment>
-      <Header />
       <Container fluid>
         <Row>
           <CoursesWrapper>
-            <Filter searchChangeHandler={searchChangeHandler} />
+            <Filter
+              filterHandler={filterHandler}
+              searchCourseHandler={searchCourseHandler}
+            />
           </CoursesWrapper>
           <CoursesWrapper>
             {filtedCourses.map((course) => {
               return (
                 <CourseItem
+                  key={course.key}
+                  uid={course.key}
                   courseName={course.courseName}
                   courseNum={course.courseNum}
                   unit={course.unit}
+                  handlerClick={clickCourseItemHandler}
                 />
               );
             })}
           </CoursesWrapper>
           <CoursesWrapper>
-            <CatalogDescription />
+            {Object.keys(specificCourse).length !== 0 && (
+              <CatalogDescription course={specificCourse} />
+            )}
           </CoursesWrapper>
         </Row>
       </Container>
