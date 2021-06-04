@@ -3,20 +3,24 @@ import React from "react";
 const CatalogDescription = (props) => {
   return (
     <div>
-      <h1>Course Title</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
+      <h1>{props.course["courseTitle"]}</h1>
+      <p>{props.course["UID"]}</p>
+      <p>{props.course["crn"]}</p>
+      <p>{props.course["courseNum"]}</p>
+      <p>{props.course["sectionNum"]}</p>
+      <p>{props.course["campus"]}</p>
+      <p>{props.course["numCredit"]}</p>
+      <p>{props.course["days"]}</p>
+      <p>{props.course["startTime"]}</p>
+      <p>{props.course["endTime"]}</p>
+      <p>{props.course["instructorName"]}</p>
+      <p>{props.course["startDate"]}</p>
+      <p>{props.course["endDate"]}</p>
+      <p>{props.course["location"]}</p>
+      <p>{props.course["attribute"]}</p>
+      <p>{JSON.stringify(props.course["lab"])}</p>
     </div>
   );
 };
 
 export default CatalogDescription;
-
-// style={{ width: "18rem" }}
