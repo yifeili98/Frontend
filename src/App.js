@@ -1,8 +1,8 @@
 import React from 'react'
-import Home from './Home';
-import Search from './Search';
-import Story from './Story';
-import About from './About';
+import Home from './pages/home/Home';
+import Search from './pages/search/Search';
+import Story from './pages/story/Story';
+import About from './pages/about/About';
 import {Route, Link} from "react-browser-router";
 import './assets/css/App.css';
 import {Nav, Navbar} from 'react-bootstrap';

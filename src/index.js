@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/css/index.css';
-import AboutController from './AboutController';
 import App from './App';
 import {BrowserRouter} from 'react-browser-router'
 
 ReactDOM.render(
-  <BrowserRouter>
-    {/* <AboutController /> */}
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <App />
   </BrowserRouter>,
   document.getElementById('root')

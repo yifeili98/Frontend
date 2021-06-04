@@ -1,7 +1,7 @@
 import React from 'react';
-import './assets/css/App.css';
-import './assets/css/About.css';
-import './assets/css/home.css';
+import '../../assets/css/App.css';
+import '../../assets/css/About.css';
+import '../../assets/css/home.css';
 import Carousel from 'react-bootstrap/Carousel';
 import NameForm from './ContactForm';
 import Row from 'react-bootstrap/Row';
