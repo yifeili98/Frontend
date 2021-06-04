@@ -80,7 +80,7 @@ class ContactForm extends React.Component {
         <Modal.Body>
           <Form>
             <Container>
-              <Row>
+              <Row className="modal_item">
                 <Col>
                   <Form.Label>Name</Form.Label>
                   <Form.Control
@@ -103,7 +103,7 @@ class ContactForm extends React.Component {
                 </Col>
               </Row>
             </Container>
-            <Form.Group className="form_group">
+            <Form.Group className="form_group modal_item">
               <Form.Label>Message</Form.Label>
               <br />
               <Form.Control

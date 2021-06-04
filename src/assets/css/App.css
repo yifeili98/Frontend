@@ -48,6 +48,10 @@
   margin-right: auto;
 }
 
+.modal_item {
+  margin-bottom: 12px;
+}
+
 .form_group .contact_textarea {
   width: 70%;
   margin-left: auto;

@@ -8,7 +8,6 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import "../../assets/css/column.css";
 
 class Filter extends React.Component {
   constructor(props) {
@@ -78,11 +77,11 @@ class Filter extends React.Component {
         </Modal.Header>
 
         <Modal.Body>
-          <Row>
-            <Col className="select-bar">
+          <Row className="modal_item">
+            <Col>
               <h5>Campus: </h5>
             </Col>
-            <Col className="select-bar">
+            <Col>
               <DropdownButton
                 as={ButtonGroup}
                 title={this.state.campus}
@@ -95,11 +94,11 @@ class Filter extends React.Component {
               </DropdownButton>
             </Col>
           </Row>
-          <Row>
-            <Col className="select-bar">
+          <Row className="modal_item">
+            <Col>
               <h5>Year: </h5>
             </Col>
-            <Col className="select-bar">
+            <Col>
               <DropdownButton
                 as={ButtonGroup}
                 title={this.state.year}
@@ -114,11 +113,11 @@ class Filter extends React.Component {
               </DropdownButton>
             </Col>
           </Row>
-          <Row>
-            <Col className="select-bar">
+          <Row className="modal_item">
+            <Col>
               <h5>Quarter: </h5>
             </Col>
-            <Col className="select-bar">
+            <Col>
               <DropdownButton
                 as={ButtonGroup}
                 title={this.state.quarter}
