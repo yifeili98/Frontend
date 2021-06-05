@@ -3,7 +3,7 @@ import Home from "./pages/home/Home";
 import Catalog from "./pages/catalog/Catalog";
 import Story from "./pages/story/Story";
 import About from "./pages/about/About";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import "./assets/css/App.css";
 import { Nav, Navbar } from "react-bootstrap";
 import da_logo from "./assets/pic/fhdalogo.jpg";
@@ -16,10 +16,10 @@ export default function App() {
           <img className="navbar-img" src={da_logo} alt="" /> FHDATime
         </Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/#/catalog">Catalog</Nav.Link>
-          <Nav.Link href="/#/story">Story</Nav.Link>
-          <Nav.Link href="/#/about">About</Nav.Link>
+          <Link className="nav-link" to="/">Home</Link>
+          <Link className="nav-link" to="/catalog">Catalog</Link>
+          <Link className="nav-link" to="/story">Story</Link>
+          <Link className="nav-link" to="/about">About</Link>
         </Nav>
       </Navbar>
 
