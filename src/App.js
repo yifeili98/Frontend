@@ -24,9 +24,9 @@ export default function App() {
       </Navbar>
 
       <Route exact path="/" render={ (routerProps) => < Home routerProps={routerProps} />} />
-      <Route exact path="/catalog" component={Catalog} />
-      <Route exact path="/story" component={Story} />
-      <Route exact path="/about" component={About} />
+      <Route exact path="/catalog" render={ (routerProps) => < Catalog routerProps={routerProps} />} />
+      <Route exact path="/story" render={ (routerProps) => < Story routerProps={routerProps} />} />
+      <Route exact path="/about" render={ (routerProps) => < About routerProps={routerProps} />} />
     </div>
   );
 }
