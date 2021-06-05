@@ -24,7 +24,7 @@ export default function Home() {
                         skasdkasldasdasdamsdlmas;dmas;dmas;ldm;asmdsa/ 
                         askdaksd;asmda;sdm .asdlkasndasd;sa 
                     </p>
-                    <a className="searchbutton" href="./search">Search</a>
+                    <a className="searchbutton" href="./catalog">Catalog</a>
                 </div>
             </div>
             
