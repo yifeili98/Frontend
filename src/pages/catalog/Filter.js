@@ -19,7 +19,6 @@ class Filter extends React.Component {
       year: "2021",
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
 
@@ -50,23 +49,6 @@ class Filter extends React.Component {
           });
       }
     );
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    axios
-      .get("https://fhda-api-test.azurewebsites.net/course_list", {
-        year: this.state.year,
-        quarter: this.state.quarter,
-      })
-      .then(function (response) {
-        console.log(response);
-        //Perform action based on response
-      })
-      .catch(function (error) {
-        console.log(error);
-        //Perform action based on error
-      });
   }
 
   render() {
