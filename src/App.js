@@ -3,7 +3,7 @@ import Home from "./pages/home/Home";
 import Catalog from "./pages/catalog/Catalog";
 import Story from "./pages/story/Story";
 import About from "./pages/about/About";
-import { Route, Redirect } from "react-browser-router";
+import { Route, Redirect } from "react-router-dom";
 import "./assets/css/App.css";
 import { Nav, Navbar } from "react-bootstrap";
 import da_logo from "./assets/pic/fhdalogo.jpg";
