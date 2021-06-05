@@ -22,6 +22,7 @@ class Filter extends React.Component {
   }
 
   handleSelect(event) {
+    this.props.clearCardsHandler();
     var event = event.target.id;
     const selectKey = event.substring(0, event.indexOf(":"));
     const selectValue = event.substring(event.indexOf(":") + 1);
@@ -29,39 +30,42 @@ class Filter extends React.Component {
       {
         [`${selectKey}`]: selectValue,
       },
-      function() {
+      function () {
         var cache_list = localStorage.getItem("cache_list");
         if (cache_list) {
-          cache_list = JSON.parse(cache_list)
+          cache_list = JSON.parse(cache_list);
           if (cache_list.length > 8) {
             localStorage.removeItem(cache_list[0]);
             cache_list = cache_list.shift();
           }
         } else {
-          cache_list = []
-          localStorage.setItem("cache_list", JSON.stringify(cache_list))
+          cache_list = [];
+          localStorage.setItem("cache_list", JSON.stringify(cache_list));
         }
-        const cache = JSON.parse(localStorage.getItem(JSON.stringify(this.state)));
+        const cache = JSON.parse(
+          localStorage.getItem(JSON.stringify(this.state))
+        );
         if (cache) {
           this.props.filterHandler(this.state, cache);
         } else {
           axios
-              .get("https://fhda-api-test.azurewebsites.net/course_list", {
-                params: {
-                  year: this.state.year,
-                  quarter: this.state.quarter,
-                },
-              })
-              .then(
-                function (response) {
-                  //Perform action based on response
-                  this.props.filterHandler(this.state, response);
-                }.bind(this)
-              )
-              .catch(function (error) {
-                console.log(error);
-                //Perform action based on error
-              });
+            .get("https://fhda-api-test.azurewebsites.net/course_list", {
+              params: {
+                year: this.state.year,
+                quarter: this.state.quarter,
+              },
+            })
+            .then(
+              function (response) {
+                //Perform action based on response
+                console.log(response);
+                this.props.filterHandler(this.state, response);
+              }.bind(this)
+            )
+            .catch(function (error) {
+              console.log(error);
+              //Perform action based on error
+            });
         }
       }
     );
@@ -80,11 +84,10 @@ class Filter extends React.Component {
               <h5>Campus: </h5>
             </Col>
             <Col>
-              <DropdownButton
-                as={ButtonGroup}
-                title={this.state.campus}
-              >
-                <Dropdown.Item onClick={this.handleSelect} id="campus:DeAnza">DeAnza</Dropdown.Item>
+              <DropdownButton as={ButtonGroup} title={this.state.campus}>
+                <Dropdown.Item onClick={this.handleSelect} id="campus:DeAnza">
+                  DeAnza
+                </Dropdown.Item>
                 <Dropdown.Item onClick={this.handleSelect} id="campus:Foothill">
                   Foothill (Coming Soon)
                 </Dropdown.Item>
@@ -96,10 +99,7 @@ class Filter extends React.Component {
               <h5>Year: </h5>
             </Col>
             <Col>
-              <DropdownButton
-                as={ButtonGroup}
-                title={this.state.year}
-              >
+              <DropdownButton as={ButtonGroup} title={this.state.year}>
                 <Dropdown.Item onClick={this.handleSelect} id="year:2021">
                   2021 (Usable)
                 </Dropdown.Item>
@@ -114,14 +114,19 @@ class Filter extends React.Component {
               <h5>Quarter: </h5>
             </Col>
             <Col>
-              <DropdownButton
-                as={ButtonGroup}
-                title={this.state.quarter}
-              >
-                <Dropdown.Item onClick={this.handleSelect} id="quarter:Fall">Fall</Dropdown.Item>
-                <Dropdown.Item onClick={this.handleSelect} id="quarter:Winter">Winter</Dropdown.Item>
-                <Dropdown.Item onClick={this.handleSelect} id="quarter:Spring">Spring</Dropdown.Item>
-                <Dropdown.Item onClick={this.handleSelect} id="quarter:Summer">Summer</Dropdown.Item>
+              <DropdownButton as={ButtonGroup} title={this.state.quarter}>
+                <Dropdown.Item onClick={this.handleSelect} id="quarter:Fall">
+                  Fall
+                </Dropdown.Item>
+                <Dropdown.Item onClick={this.handleSelect} id="quarter:Winter">
+                  Winter
+                </Dropdown.Item>
+                <Dropdown.Item onClick={this.handleSelect} id="quarter:Spring">
+                  Spring
+                </Dropdown.Item>
+                <Dropdown.Item onClick={this.handleSelect} id="quarter:Summer">
+                  Summer
+                </Dropdown.Item>
               </DropdownButton>
             </Col>
           </Row>

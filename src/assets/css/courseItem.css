@@ -12,8 +12,15 @@
   width: fit-content;
   min-height: 80vh;
   position: relative;
+  align-items: center;
 }
 
 .course-item:hover {
   background-color: #f8f8f8;
 }
+
+.loading {
+  left: 45%;
+  top: 45%;
+  position: absolute;
+} /* 50%? */
