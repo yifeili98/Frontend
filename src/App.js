@@ -3,7 +3,7 @@ import Home from "./pages/home/Home";
 import Catalog from "./pages/catalog/Catalog";
 import Story from "./pages/story/Story";
 import About from "./pages/about/About";
-import { Route, Redirect } from "react-browser-router";
+import { Route, Link } from "react-router-dom";
 import "./assets/css/App.css";
 import { Nav, Navbar } from "react-bootstrap";
 import da_logo from "./assets/pic/fhdalogo.jpg";
@@ -16,17 +16,17 @@ export default function App() {
           <img className="navbar-img" src={da_logo} alt="" /> FHDATime
         </Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/catalog">Catalog</Nav.Link>
-          <Nav.Link href="/story">Story</Nav.Link>
-          <Nav.Link href="/about">About</Nav.Link>
+          <Link className="nav-link" to="/">Home</Link>
+          <Link className="nav-link" to="/catalog">Catalog</Link>
+          <Link className="nav-link" to="/story">Story</Link>
+          <Link className="nav-link" to="/about">About</Link>
         </Nav>
       </Navbar>
 
-      <Route exact path="/" component={Home} />
-      <Route exact path="/catalog" component={Catalog} />
-      <Route exact path="/story" component={Story} />
-      <Route exact path="/about" component={About} />
+      <Route exact path="/" render={ (routerProps) => < Home routerProps={routerProps} />} />
+      <Route exact path="/catalog" render={ (routerProps) => < Catalog routerProps={routerProps} />} />
+      <Route exact path="/story" render={ (routerProps) => < Story routerProps={routerProps} />} />
+      <Route exact path="/about" render={ (routerProps) => < About routerProps={routerProps} />} />
     </div>
   );
 }
