@@ -18,35 +18,51 @@ class Filter extends React.Component {
       quarter: "Summer",
       year: "2021",
     };
-
     this.handleSelect = this.handleSelect.bind(this);
   }
 
   handleSelect(event) {
+    var event = event.target.id;
     const selectKey = event.substring(0, event.indexOf(":"));
     const selectValue = event.substring(event.indexOf(":") + 1);
     this.setState(
       {
         [`${selectKey}`]: selectValue,
       },
-      () => {
-        axios
-          .get("https://fhda-api-test.azurewebsites.net/course_list", {
-            params: {
-              year: this.state.year,
-              quarter: this.state.quarter,
-            },
-          })
-          .then(
-            function (response) {
-              //Perform action based on response
-              this.props.filterHandler(response);
-            }.bind(this)
-          )
-          .catch(function (error) {
-            console.log(error);
-            //Perform action based on error
-          });
+      function() {
+        var cache_list = localStorage.getItem("cache_list");
+        if (cache_list) {
+          cache_list = JSON.parse(cache_list)
+          if (cache_list.length > 8) {
+            localStorage.removeItem(cache_list[0]);
+            cache_list = cache_list.shift();
+          }
+        } else {
+          cache_list = []
+          localStorage.setItem("cache_list", JSON.stringify(cache_list))
+        }
+        const cache = JSON.parse(localStorage.getItem(JSON.stringify(this.state)));
+        if (cache) {
+          this.props.filterHandler(this.state, cache);
+        } else {
+          axios
+              .get("https://fhda-api-test.azurewebsites.net/course_list", {
+                params: {
+                  year: this.state.year,
+                  quarter: this.state.quarter,
+                },
+              })
+              .then(
+                function (response) {
+                  //Perform action based on response
+                  this.props.filterHandler(this.state, response);
+                }.bind(this)
+              )
+              .catch(function (error) {
+                console.log(error);
+                //Perform action based on error
+              });
+        }
       }
     );
   }
@@ -67,10 +83,9 @@ class Filter extends React.Component {
               <DropdownButton
                 as={ButtonGroup}
                 title={this.state.campus}
-                onSelect={this.handleSelect}
               >
-                <Dropdown.Item eventKey="campus:DeAnza">DeAnza</Dropdown.Item>
-                <Dropdown.Item eventKey="campus:Foothill">
+                <Dropdown.Item onClick={this.handleSelect} id="campus:DeAnza">DeAnza</Dropdown.Item>
+                <Dropdown.Item onClick={this.handleSelect} id="campus:Foothill">
                   Foothill (Coming Soon)
                 </Dropdown.Item>
               </DropdownButton>
@@ -84,12 +99,11 @@ class Filter extends React.Component {
               <DropdownButton
                 as={ButtonGroup}
                 title={this.state.year}
-                onSelect={this.handleSelect}
               >
-                <Dropdown.Item eventKey="year:2021">
+                <Dropdown.Item onClick={this.handleSelect} id="year:2021">
                   2021 (Usable)
                 </Dropdown.Item>
-                <Dropdown.Item eventKey="year:1998">
+                <Dropdown.Item onClick={this.handleSelect} id="year:1998">
                   1998 (Not Available)
                 </Dropdown.Item>
               </DropdownButton>
@@ -103,12 +117,11 @@ class Filter extends React.Component {
               <DropdownButton
                 as={ButtonGroup}
                 title={this.state.quarter}
-                onSelect={this.handleSelect}
               >
-                <Dropdown.Item eventKey="quarter:Fall">Fall</Dropdown.Item>
-                <Dropdown.Item eventKey="quarter:Winter">Winter</Dropdown.Item>
-                <Dropdown.Item eventKey="quarter:Spring">Spring</Dropdown.Item>
-                <Dropdown.Item eventKey="quarter:Summer">Summer</Dropdown.Item>
+                <Dropdown.Item onClick={this.handleSelect} id="quarter:Fall">Fall</Dropdown.Item>
+                <Dropdown.Item onClick={this.handleSelect} id="quarter:Winter">Winter</Dropdown.Item>
+                <Dropdown.Item onClick={this.handleSelect} id="quarter:Spring">Spring</Dropdown.Item>
+                <Dropdown.Item onClick={this.handleSelect} id="quarter:Summer">Summer</Dropdown.Item>
               </DropdownButton>
             </Col>
           </Row>

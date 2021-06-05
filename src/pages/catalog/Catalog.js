@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import Header from "../../components/Header";
 import CoursesWrapper from "../../components/CoursesWrapper";
 import CourseItem from "../../components/CourseItem";
@@ -45,48 +45,32 @@ function Catalog() {
   const coursesFilter = (input) => {
     const keyWord = input.trim().replace(" ", "").replace(/[\\]/g, "");
     const filteredClasses = fuzzyQuery(courses, keyWord);
-    //console.log(filteredClasses);
     setFiltedCourses(filteredClasses);
   };
 
-  useEffect(async () => {
-    //do https requrest
-    const allCourses = [];
-    axios
-      .get(
-        "https://fhda-api-test.azurewebsites.net/course_list?year=2021&quarter=Summer"
-      )
-      .then((res) => {
-        for (const key in res.data) {
-          const courseObj = res.data[key];
-          localStorage.setItem(key, JSON.stringify(courseObj));
-          let course = {
-            key: parseInt(key),
-            courseName: courseObj.courseTitle,
-            courseNum: courseObj.courseNum,
-            unit: +courseObj.numCredit,
-          };
-          allCourses.push(course);
-        }
-        setCourses(allCourses);
-        setFiltedCourses(allCourses);
-      });
-  }, []);
+  const filterHandler = (filter_key, filter_value) => {
+    var allCourses = [];
+    const cache = JSON.parse(localStorage.getItem(JSON.stringify(filter_key)));
+    if (!cache) {
+      for (const key in filter_value.data) {
+        const courseObj = filter_value.data[key];
+        let course = {
+          key: parseInt(key),
+          courseName: courseObj.courseTitle,
+          courseNum: courseObj.courseNum,
+          unit: +courseObj.numCredit,
+        };
+        allCourses.push(course);
+      }
+      localStorage.setItem(JSON.stringify(filter_key), JSON.stringify(allCourses));
+      var cache_list = JSON.parse(localStorage.getItem("cache_list"));
+      cache_list.push(filter_key);
+      localStorage.setItem("cache_list", JSON.stringify(cache_list));
+    } else {
 
-  const filterHandler = (responseFromFilter) => {
-    localStorage.clear();
-    const allCourses = [];
-    for (const key in responseFromFilter.data) {
-      const courseObj = responseFromFilter.data[key];
-      localStorage.setItem(key, JSON.stringify(courseObj));
-      let course = {
-        key: parseInt(key),
-        courseName: courseObj.courseTitle,
-        courseNum: courseObj.courseNum,
-        unit: +courseObj.numCredit,
-      };
-      allCourses.push(course);
+      allCourses = JSON.parse(localStorage.getItem(JSON.stringify(filter_key)));
     }
+    
     setCourses(allCourses);
     setFiltedCourses(allCourses);
     setSpecificCourse({});
@@ -94,7 +78,6 @@ function Catalog() {
 
   const searchCourseHandler = (event) => {
     coursesFilter(event.target.value);
-    //console.log(event.target.value);
   };
 
   const clickCourseItemHandler = (key) => {
