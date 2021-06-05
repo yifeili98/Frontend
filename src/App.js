@@ -23,7 +23,7 @@ export default function App() {
         </Nav>
       </Navbar>
 
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" render={ (routerProps) => < Home routerProps={routerProps} />} />
       <Route exact path="/catalog" component={Catalog} />
       <Route exact path="/story" component={Story} />
       <Route exact path="/about" component={About} />
