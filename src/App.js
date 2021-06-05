@@ -12,7 +12,7 @@ export default function App() {
   return (
     <div className="App">
       <Navbar bg="red" variant="dark" className="navbar">
-        <Link className="nav-brand" to="/">
+        <Link className="navbar-brand" to="/">
           <img className="navbar-img" src={da_logo} alt="" /> FHDATime
         </Link>
         <Nav className="mr-auto">
