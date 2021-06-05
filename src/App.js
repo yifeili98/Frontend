@@ -12,9 +12,9 @@ export default function App() {
   return (
     <div className="App">
       <Navbar bg="red" variant="dark" className="navbar">
-        <Navbar.Brand href="/" className="navbar-brand">
+        <Link className="navbar-brand" to="/">
           <img className="navbar-img" src={da_logo} alt="" /> FHDATime
-        </Navbar.Brand>
+        </Link>
         <Nav className="mr-auto">
           <Link className="nav-link" to="/">Home</Link>
           <Link className="nav-link" to="/catalog">Catalog</Link>
