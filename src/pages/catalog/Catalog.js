@@ -12,6 +12,7 @@ function Catalog() {
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [specificCourse, setSpecificCourse] = useState({});
   const [filterInfo, setFilterInfo] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   String.prototype.splice = function (idx, rem, str) {
     return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
@@ -44,6 +45,7 @@ function Catalog() {
   }, []);
 
   const coursesFilter = (input) => {
+    setSpecificCourse({});
     const keyWord = input.trim().replace(" ", "").replace(/[\\]/g, "");
     const filteredClasses = fuzzyQuery(courses, keyWord);
     setFilteredCourses(filteredClasses);
@@ -66,16 +68,13 @@ function Catalog() {
         for (const key in res.data) {
           const courseObj = res.data[key];
           let course = {
-            key: parseInt(key),
+            key: key,
             courseName: courseObj.courseTitle,
             courseNum: courseObj.courseNum,
             unit: +courseObj.numCredit,
           };
           allCourses.push(course);
         }
-        setCourses(allCourses);
-        setFilteredCourses(allCourses);
-        setFilterInfo({ campus: "DeAnza", quarter: "Summer", year: "2021" });
         const cache_list = [
           { campus: "DeAnza", quarter: "Summer", year: "2021" },
         ];
@@ -86,11 +85,16 @@ function Catalog() {
           ),
           JSON.stringify(allCourses)
         );
+        setCourses(allCourses);
+        setFilteredCourses(allCourses);
+        setFilterInfo({ campus: "DeAnza", quarter: "Summer", year: "2021" });
+        setIsLoading(false);
       });
   }, []);
 
   const clearCardsHandler = () => {
-    setFilteredCourses([]);
+    setIsLoading(true);
+    setSpecificCourse({});
   };
 
   const filterHandler = (filter_key, filter_value) => {
@@ -100,7 +104,7 @@ function Catalog() {
       for (const key in filter_value.data) {
         const courseObj = filter_value.data[key];
         let course = {
-          key: parseInt(key),
+          key: key,
           courseName: courseObj.courseTitle,
           courseNum: courseObj.courseNum,
           unit: +courseObj.numCredit,
@@ -133,7 +137,7 @@ function Catalog() {
     setFilterInfo(filter_key);
     setCourses(allCourses);
     setFilteredCourses(allCourses);
-    setSpecificCourse({});
+    setIsLoading(false);
   }; // can be refactored
 
   const searchCourseHandler = (event) => {
@@ -144,11 +148,13 @@ function Catalog() {
     const allCourses = JSON.parse(
       localStorage.getItem(JSON.stringify(filterInfo))
     );
-    setSpecificCourse(allCourses[parseInt(key)]);
+    setSpecificCourse(allCourses[key]);
   };
 
-  const courseCardsContent =
-    filteredCourses.length === 0 || filteredCourses === undefined ? (
+  let courseCardsContent = <p>There are no courses matching your filters.</p>;
+
+  if (isLoading) {
+    courseCardsContent = (
       <Loading
         type="spinningBubbles"
         color="#8f0505"
@@ -156,20 +162,21 @@ function Catalog() {
         width="15%"
         className={"loading"}
       />
-    ) : (
-      filteredCourses.map((course) => {
-        return (
-          <CourseItem
-            key={course.key}
-            uid={course.key}
-            courseName={course.courseName}
-            courseNum={course.courseNum}
-            unit={course.unit}
-            handlerClick={clickCourseItemHandler}
-          />
-        );
-      })
     );
+  } else if (filteredCourses.length !== 0) {
+    courseCardsContent = filteredCourses.map((course) => {
+      return (
+        <CourseItem
+          key={course.key}
+          uid={course.key}
+          courseName={course.courseName}
+          courseNum={course.courseNum}
+          unit={course.unit}
+          handlerClick={clickCourseItemHandler}
+        />
+      );
+    });
+  }
 
   return (
     <React.Fragment>
