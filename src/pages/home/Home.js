@@ -1,5 +1,6 @@
 import React from 'react'
 import '../../assets/css/home.css';
+import { Link } from "react-router-dom";
 import districtLogo from '../../assets/pic/logo_district.png';
 
 export default function Home() {
@@ -24,7 +25,7 @@ export default function Home() {
                         skasdkasldasdasdamsdlmas;dmas;dmas;ldm;asmdsa/ 
                         askdaksd;asmda;sdm .asdlkasndasd;sa 
                     </p>
-                    <a className="searchbutton" href="./catalog">Catalog</a>
+                    <Link className="searchbutton" to="/catalog">Catalog</Link>
                 </div>
             </div>
             
