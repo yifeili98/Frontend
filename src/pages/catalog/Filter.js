@@ -58,7 +58,7 @@ class Filter extends React.Component {
             .then(
               function (response) {
                 //Perform action based on response
-                console.log(response);
+                //console.log(response);
                 this.props.filterHandler(this.state, response);
               }.bind(this)
             )

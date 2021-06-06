@@ -9,7 +9,7 @@ import Loading from "../../components/Loading";
 
 function Catalog() {
   const [courses, setCourses] = useState([]);
-  const [filtedCourses, setFiltedCourses] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]);
   const [specificCourse, setSpecificCourse] = useState({});
   const [filterInfo, setFilterInfo] = useState();
 
@@ -46,10 +46,11 @@ function Catalog() {
   const coursesFilter = (input) => {
     const keyWord = input.trim().replace(" ", "").replace(/[\\]/g, "");
     const filteredClasses = fuzzyQuery(courses, keyWord);
-    setFiltedCourses(filteredClasses);
+    setFilteredCourses(filteredClasses);
   };
 
   useEffect(async () => {
+    localStorage.clear();
     //do https requrest
     const allCourses = [];
     axios
@@ -73,7 +74,7 @@ function Catalog() {
           allCourses.push(course);
         }
         setCourses(allCourses);
-        setFiltedCourses(allCourses);
+        setFilteredCourses(allCourses);
         setFilterInfo({ campus: "DeAnza", quarter: "Summer", year: "2021" });
         const cache_list = [
           { campus: "DeAnza", quarter: "Summer", year: "2021" },
@@ -89,7 +90,7 @@ function Catalog() {
   }, []);
 
   const clearCardsHandler = () => {
-    setFiltedCourses([]);
+    setFilteredCourses([]);
   };
 
   const filterHandler = (filter_key, filter_value) => {
@@ -106,11 +107,18 @@ function Catalog() {
         };
         allCourses.push(course);
       }
+      var cache_list = JSON.parse(localStorage.getItem("cache_list"));
+      if (cache_list.length > 8) {
+        localStorage.removeItem(cache_list[0]);
+        localStorage.removeItem(cache_list[0].concat("cards"));
+        cache_list = cache_list.shift();
+      }
+
       localStorage.setItem(
         JSON.stringify(filter_key),
         JSON.stringify(filter_value.data)
       );
-      var cache_list = JSON.parse(localStorage.getItem("cache_list"));
+      //var cache_list = JSON.parse(localStorage.getItem("cache_list"));
       cache_list.push(filter_key);
       localStorage.setItem("cache_list", JSON.stringify(cache_list));
       localStorage.setItem(
@@ -124,7 +132,7 @@ function Catalog() {
     }
     setFilterInfo(filter_key);
     setCourses(allCourses);
-    setFiltedCourses(allCourses);
+    setFilteredCourses(allCourses);
     setSpecificCourse({});
   }; // can be refactored
 
@@ -140,7 +148,7 @@ function Catalog() {
   };
 
   const courseCardsContent =
-    filtedCourses.length === 0 ? (
+    filteredCourses.length === 0 || filteredCourses === undefined ? (
       <Loading
         type="spinningBubbles"
         color="#8f0505"
@@ -149,7 +157,7 @@ function Catalog() {
         className={"loading"}
       />
     ) : (
-      filtedCourses.map((course) => {
+      filteredCourses.map((course) => {
         return (
           <CourseItem
             key={course.key}
